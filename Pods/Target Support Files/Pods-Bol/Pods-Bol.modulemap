@@ -1,0 +1,6 @@
+framework module Pods_Bol {
+  umbrella header "Pods-Bol-umbrella.h"
+
+  export *
+  module * { export * }
+}
