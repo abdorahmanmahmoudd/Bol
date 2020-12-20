@@ -9,8 +9,7 @@ import Foundation
 
 /// App Global constants
 struct Constants {
-    static let apiKey = "VUFCswM1"
-    static let baseURL = "https://www.rijksmuseum.nl"
+    static let apiKey = "D55EFE39C4EB4E04A50A65D2932C6127"
     
     struct UITesting {
         static let uiTestingRunning = "UI_TESTING_RUNNING_KEY"

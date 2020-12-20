@@ -7,3 +7,13 @@
 */
 
 // MARK: - General
+"GENERAL_ERROR_DESCRIPTION" = "Countered a problem!";
+"INVALID_URL" = "Invalid URL!";
+
+// MARK: - ProductsList
+"PRODUCTS_LIST_TITLE" = "Products";
+
+// MARK: Error View
+"GENERAL_EMPTY_STATE_ERROR" = "No results";
+"ERROR_VIEW_BUTTON_TITLE" = "Try again";
+

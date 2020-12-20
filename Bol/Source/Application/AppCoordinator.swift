@@ -14,7 +14,7 @@ final class AppCoordinator: Coordinator {
     private(set) var window: UIWindow
     
     /// App API shared client
-//    private(set) var api: API = API()
+    private(set) var api: API = API()
     
     /// Coordinator navigation controller
     var navigationController: UINavigationController
@@ -30,7 +30,8 @@ final class AppCoordinator: Coordinator {
     }
     
     func start() {
-        startSplash()
+//        startSplash()
+        startProductsList()
     }
     
     func childDidFinish(_ child: Coordinator) {
@@ -47,10 +48,10 @@ final class AppCoordinator: Coordinator {
         removeChildCoordinator(child)
     }
     
-    func startStripsList() {
-//        let stripsListCoordinator = StripsListCoordinator(navigationController, api)
-//        addChildCoordinator(stripsListCoordinator)
-//        stripsListCoordinator.start()
+    func startProductsList() {
+        let productsListCoordinator = ProductsListCoordinator(navigationController, api)
+        addChildCoordinator(productsListCoordinator)
+        productsListCoordinator.start()
     }
     
     func startSplash() {
