@@ -5,7 +5,7 @@
 //  Created by Abdelrahman Ali on 19/12/2020.
 //
 
-import Foundation
+import UIKit
 
 /// App Global constants
 struct Constants {

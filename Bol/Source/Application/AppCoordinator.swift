@@ -18,47 +18,45 @@ final class AppCoordinator: Coordinator {
     
     /// Coordinator navigation controller
     var navigationController: UINavigationController
+    
+    /// Main Tabbar Controller
+    var tabbarController: UITabBarController
 
     /// An array to track the childs coordinators
     var childCoordinators: [Coordinator] = []
     
     init(_ window: UIWindow) {
+        
         navigationController = UINavigationController()
+        navigationController.navigationBar.isHidden = true
+        navigationController.navigationBar.isTranslucent = true
+        
+        tabbarController = UITabBarController()
+        tabbarController.tabBar.tintColor = UIColor.mainColor
+        
         self.window = window
         self.window.rootViewController = navigationController
         self.window.makeKeyAndVisible()
     }
     
+    /// Starting point
     func start() {
-//        startSplash()
-        startProductsList()
+        startTabbarController()
     }
     
-    func childDidFinish(_ child: Coordinator) {
+    func startTabbarController() {
         
-//        switch child.self {
-//
-//        case is SplashCoordinator:
-//            startStripsList()
-//
-//        default:
-//            debugPrint("childDidFinish not handling \(child)")
-//        }
-
-        removeChildCoordinator(child)
-    }
-    
-    func startProductsList() {
-        let productsListCoordinator = ProductsListCoordinator(navigationController, api)
+        /// Setup `ProductsListCoordinator` & start it.
+        let productsListCoordinator = ProductsListCoordinator(api)
         addChildCoordinator(productsListCoordinator)
         productsListCoordinator.start()
-    }
-    
-    func startSplash() {
-//        let splashCoordinator = SplashCoordinator(navigationController)
-//        addChildCoordinator(splashCoordinator)
-//        splashCoordinator.parentCoordinator = self
-//        splashCoordinator.start()
+        
+        /// Configure TabbarController view controllers
+        let viewControllers = [productsListCoordinator.navigationController]
+        tabbarController.setViewControllers(viewControllers, animated: true)
+        
+        /// Set navigationController root viewController
+        navigationController.setViewControllers([tabbarController], animated: true)
     }
 }
 

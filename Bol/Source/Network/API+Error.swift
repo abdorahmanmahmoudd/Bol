@@ -14,8 +14,8 @@ extension API {
         case decodingError(Swift.Error)
         case networkError(Swift.Error)
         case httpErrorCode(Int)
-        case invalidURL
-        case invalidRequest
+        case invalidURLHost
+        case invalidURLPath
         case nonHTTPResponse
         case unknown
         
@@ -27,9 +27,9 @@ extension API {
                 return -11001
             case .networkError:
                 return -11002
-            case .invalidURL:
+            case .invalidURLHost:
                 return -11004
-            case .invalidRequest:
+            case .invalidURLPath:
                 return -11005
             case .httpErrorCode(let code):
                 return code
@@ -46,7 +46,7 @@ extension API {
             
             switch self {
             
-            case .decodingError, .httpErrorCode, .nonHTTPResponse, .unknown, .invalidRequest:
+            case .decodingError, .httpErrorCode, .nonHTTPResponse, .unknown, .invalidURLHost, .invalidURLPath:
             return genericMessage
             
             case let .networkError(error):
@@ -54,9 +54,6 @@ extension API {
                     return (error as NSError).localizedDescription
                 }
                 return genericMessage
-                
-            case .invalidURL:
-                return "INVALID_URL".localized
             }
         }
     }

@@ -11,6 +11,7 @@ import RxSwift
 /// A protocol to group all of our app repositories so we have single and central dependency  for network requests across the app.
 protocol NetworkRepository {
     var productsListAPI: ProductsListRepository { get }
+    var productDetailsAPI: ProductDetailsRepository { get }
 }
 
 // MARK: - API shared client
@@ -48,6 +49,10 @@ extension API {
     /// App API repositories
     var productsListAPI: ProductsListRepository {
         return ProductsListAPI()
+    }
+    
+    var productDetailsAPI: ProductDetailsRepository {
+        return ProductDetailsAPI()
     }
 }
 

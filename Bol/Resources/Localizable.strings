@@ -17,3 +17,6 @@
 "GENERAL_EMPTY_STATE_ERROR" = "No results";
 "ERROR_VIEW_BUTTON_TITLE" = "Try again";
 
+// MARK: Product Availability View
+"PRODUCT_AVAILABILITY_SELECT" = "Select";
+

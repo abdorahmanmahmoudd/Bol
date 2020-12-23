@@ -17,6 +17,9 @@ target 'Bol' do
 
   # loading indicator
   pod 'PKHUD', '5.3.0'
+  
+  # Stars View
+  pod 'Cosmos', '23.0.0'
 
   target 'BolTests' do
     inherit! :search_paths

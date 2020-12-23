@@ -11,8 +11,10 @@ import RxCocoa
 
 final class ProductsListViewController: BaseViewController {
 
-    /// Products  table view
-    private var productsTableView = UITableView()
+    /// Products  collection view
+    private var productsCollectionView: UICollectionView?
+    private let collectionViewSectionInsets = UIEdgeInsets(top: 10, left: 8, bottom: 10, right: 8)
+    private let minimumInterspace: CGFloat = 4
     
     /// `ProductsListViewModel`
     private var viewModel: ProductsListViewModel!
@@ -23,16 +25,14 @@ final class ProductsListViewController: BaseViewController {
     /// RxSwift
     private let disposeBag = DisposeBag()
 
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
         /// Set navigation bar title
         styleNavigationItem()
         
-        /// Configure news table view and add it
-        view.addSubview(productsTableView)
-        configureProductsTableView()
+        /// Configure news collection view and add it
+        configureProductsCollectionView()
         
         /// Bind reactive observables
         bindObservables()
@@ -44,28 +44,40 @@ final class ProductsListViewController: BaseViewController {
     /// Set navigation item style
     private func styleNavigationItem() {
         
-        title = "PRODUCTS_LIST_TITLE".localized
+        /// set navigation item title view
+        let logoImage = #imageLiteral(resourceName: "bol")
+        let logoImageView = UIImageView(image: logoImage)
+        logoImageView.contentMode = .scaleAspectFit
+        navigationItem.titleView = logoImageView
+        
         navigationController?.navigationBar.barTintColor = UIColor.white
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.systemBlue, NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 18)]
+        navigationController?.navigationBar.tintColor = UIColor.mainColor
+        navigationController?.navigationBar.isTranslucent = false
+        navigationController?.hidesBarsOnSwipe = true
     }
 
-    /// Configure Products table view
-    private func configureProductsTableView() {
+    /// Configure Products collection view
+    private func configureProductsCollectionView() {
         
-        /// Set delegate, datasource and refresh control
-        productsTableView.delegate = self
-        productsTableView.dataSource = self
-        productsTableView.refreshControl = refreshControl
-        productsTableView.separatorStyle = .none
+        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        layout.sectionInset = collectionViewSectionInsets
+        let collectionView = UICollectionView(frame: view.frame, collectionViewLayout: layout)
+        collectionView.backgroundColor = .white
+        
+        /// Add the collection view and activate constraints
+        view.addSubview(collectionView)
+        collectionView.activateConstraints(for: view)
         
         /// Register the cell
-        let productCellNib = UINib(nibName: ProductTableViewCell.identifier, bundle: nil)
-        productsTableView.register(productCellNib, forCellReuseIdentifier: ProductTableViewCell.identifier)
+        let productCellNib = UINib(nibName: ProductCollectionViewCell.identifier, bundle: nil)
+        collectionView.register(productCellNib, forCellWithReuseIdentifier: ProductCollectionViewCell.identifier)
         
-        /// Activate constraints and set row height to Automatic Dimension
-        productsTableView.activateConstraints(for: view)
-        productsTableView.rowHeight = UITableView.automaticDimension
-        productsTableView.estimatedRowHeight = 180
+        /// Set delegate, datasource and refresh control
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.refreshControl = refreshControl
+
+        productsCollectionView = collectionView
     }
     
     private func bindObservables() {
@@ -113,7 +125,7 @@ final class ProductsListViewController: BaseViewController {
                     return
                 }
                 self.removeErrorView()
-                self.productsTableView.reloadData()
+                self.productsCollectionView?.reloadData()
             }
         }
         
@@ -131,28 +143,21 @@ final class ProductsListViewController: BaseViewController {
                 
             }).disposed(by: disposeBag)
     }
-    
-    /// Open `ProductDetailsViewController` with selected ArtObject
-//    private func pushArtDetails(with indexPath: IndexPath) {
-//
-//        let artDetailViewModel = ArtDetailsViewModel(art: viewModel.item(at: indexPath), api: viewModel.api)
-//        let artDetailsViewController = ArtDetailsViewController.create(payload: artDetailViewModel)
-//        navigationController?.pushViewController(artDetailsViewController, animated: true)
-//    }
 }
 
-// MARK: UITableViewDataSource
-extension ProductsListViewController: UITableViewDataSource {
-
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+// MARK: UICollectionViewDataSource
+extension ProductsListViewController: UICollectionViewDataSource {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.numberOfRows()
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: ProductTableViewCell.identifier,
-                                                       for: indexPath) as? ProductTableViewCell else {
-            fatalError("Couldn't dequeue a cell!")
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductCollectionViewCell.identifier,
+                                                            for: indexPath) as? ProductCollectionViewCell else {
+            
+            fatalError("Couldn't dequeue a cell! \(ProductCollectionViewCell.description())")
         }
 
         cell.configure(with: viewModel.item(at: indexPath))
@@ -160,10 +165,10 @@ extension ProductsListViewController: UITableViewDataSource {
     }
 }
 
-// MARK: UITableViewDelegate
-extension ProductsListViewController: UITableViewDelegate {
+// MARK: UICollectionViewDelegate
+extension ProductsListViewController: UICollectionViewDelegate {
     
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         
         /// Do not fetch next page during  specific UI tests
 //        #if DEBUG
@@ -178,9 +183,34 @@ extension ProductsListViewController: UITableViewDelegate {
         }
     }
     
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        pushProductDetails(with: indexPath)
-//    }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        /// Open `ProductDetailsViewController` with selected Product
+        (coordinator as? ProductsListCoordinator)?.didSelectProduct(with: viewModel.item(at: indexPath).id)
+    }
+}
+
+// MARK: UICollectionViewFlowlayoutDelegate
+extension ProductsListViewController: UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return cellSize()
+    }
+    
+    /// Calculates the cell size
+    private func cellSize() -> CGSize {
+        
+        let cellWidth: CGFloat = (UIScreen.main.bounds.width - minimumInterspace - (collectionViewSectionInsets.left + collectionViewSectionInsets.right)) / 2.0
+        
+        /// Apply 3:2 ratio for iPhone, else apply 4:3 ratio
+        let cellHeight = UIDevice.current.userInterfaceIdiom == .phone ? (cellWidth * 3) / 2 : (cellWidth * 3) / 4
+        
+        return CGSize(width: cellWidth, height: cellHeight)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return minimumInterspace
+    }
 }
 
 // MARK: Injectable
@@ -203,8 +233,8 @@ extension ProductsListViewController {
     override func setAccessibilityIdentifiers(){
         super.setAccessibilityIdentifiers()
         
-        productsTableView.accessibilityIdentifier = AccessibilityIdentifiers.rijksListTableView.rawValue
-        productsTableView.isAccessibilityElement = false
+        productsCollectionView?.accessibilityIdentifier = AccessibilityIdentifiers.rijksListTableView.rawValue
+        productsCollectionView?.isAccessibilityElement = false
     }
 }
 

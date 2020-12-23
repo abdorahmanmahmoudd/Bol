@@ -1,4 +1,5 @@
 ${PODS_ROOT}/Target Support Files/Pods-Bol-BolUITests/Pods-Bol-BolUITests-frameworks.sh
+${BUILT_PRODUCTS_DIR}/Cosmos/Cosmos.framework
 ${BUILT_PRODUCTS_DIR}/Nuke/Nuke.framework
 ${BUILT_PRODUCTS_DIR}/PKHUD/PKHUD.framework
 ${BUILT_PRODUCTS_DIR}/RxBlocking/RxBlocking.framework

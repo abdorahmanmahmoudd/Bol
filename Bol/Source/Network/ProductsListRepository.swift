@@ -6,9 +6,6 @@
 //
 
 import Foundation
-
-
-import Foundation
 import RxSwift
 
 /// A protocol for each story repository to make it testable and injectable by any implementation
@@ -22,7 +19,7 @@ final class ProductsListAPI: API, ProductsListRepository {
     func fetchProductsList(offset: Int) -> Single<ProductsList?> {
         
         guard var urlComponents = URLComponents(string: urlOfType(.production)) else {
-            return .error(API.Error.invalidURL)
+            return .error(API.Error.invalidURLHost)
         }
 
         let path = "/catalog/v4/lists"
@@ -30,7 +27,7 @@ final class ProductsListAPI: API, ProductsListRepository {
         urlComponents.setQueryItems(parameters: ["offset": "\(offset)"])
         
         guard let url = urlComponents.url else {
-            return .error(API.Error.invalidURL)
+            return .error(API.Error.invalidURLPath)
         }
 
         return response(for: url).observeOn(MainScheduler.instance)

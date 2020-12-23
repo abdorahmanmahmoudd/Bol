@@ -14,8 +14,9 @@ final class ProductsListCoordinator: Coordinator {
     
     var api: NetworkRepository
     
-    init(_ navigationController: UINavigationController, _ api: NetworkRepository) {
-        self.navigationController = navigationController
+    init(_ api: NetworkRepository) {
+        self.navigationController = UINavigationController()
+        self.navigationController.tabBarItem = UITabBarItem(title: "", image: #imageLiteral(resourceName: "baseline_home_black_24pt"), selectedImage: #imageLiteral(resourceName: "outline_home_black_24pt"))
         self.api = api
     }
     
@@ -25,5 +26,30 @@ final class ProductsListCoordinator: Coordinator {
         let productsListViewController = ProductsListViewController.create(payload: productsListViewModel)
         productsListViewController.coordinator = self
         navigationController.setViewControllers([productsListViewController], animated: true)
+    }
+    
+    func didSelectProduct(with Id: String) {
+        
+        let productDetailsCoordinator = ProductDetailsCoordinator(navigationController, api, productId: Id)
+        productDetailsCoordinator.parentCoordinator = self
+        addChildCoordinator(productDetailsCoordinator)
+        productDetailsCoordinator.start()
+    }
+}
+
+// MARK: Additional behaviour
+extension ProductsListCoordinator {
+    
+    func childDidFinish(_ child: Coordinator) {
+        
+        switch child.self {
+        case is ProductDetailsCoordinator:
+            debugPrint("ProductDetailsCoordinator didFinish")
+            
+        default:
+            debugPrint("childDidFinish not handling \(child)")
+        }
+        
+        removeChildCoordinator(child)
     }
 }
