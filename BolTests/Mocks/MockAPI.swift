@@ -18,6 +18,7 @@ enum MockError: Error {
 /// Mocked repository response configuration
 enum MockRepositoryConfig {
     case success
+    case empty
     case error
 }
 

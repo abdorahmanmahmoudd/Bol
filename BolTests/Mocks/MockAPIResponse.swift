@@ -12,6 +12,7 @@ import RxSwift
 /// Mocked API response configuration
 enum MockResponseConfig {
     case success
+    case empty
     case error
 }
 
@@ -36,6 +37,10 @@ extension MockAPIResponse {
             case .error:
                 single(.error(MockError.decodingError))
                 
+            case .empty:
+                let emptyList = MockResponseData().mockEmptyProductsList()
+                single(.success(emptyList))
+                
             case .success:
                 let list = MockResponseData().mockProductsList()
                 single(.success(list))
@@ -54,12 +59,16 @@ extension MockAPIResponse {
         return Single<ProductDetails?>.create(subscribe: { single -> Disposable in
             
             switch self.config {
-            case .error:
-                single(.error(MockError.decodingError))
-                
             case .success:
                 let productDetails = MockResponseData().mockProductDetails()
                 single(.success(productDetails))
+                
+            case .empty:
+                let emptyProductDetails = MockResponseData().mockEmptyProductDetails()
+                single(.success(emptyProductDetails))
+                
+            default:
+                single(.error(MockError.decodingError))
             }
             
             return Disposables.create()

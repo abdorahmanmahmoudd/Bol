@@ -57,6 +57,7 @@
 		28CBEB7A2593F79F005C31E6 /* ProductsListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28CBEB792593F79F005C31E6 /* ProductsListTests.swift */; };
 		28CBEBA72593FDF6005C31E6 /* Stubs in Resources */ = {isa = PBXBuildFile; fileRef = 28CBEBA62593FDF6005C31E6 /* Stubs */; };
 		28CBEBA82593FDF6005C31E6 /* Stubs in Resources */ = {isa = PBXBuildFile; fileRef = 28CBEBA62593FDF6005C31E6 /* Stubs */; };
+		28CBEC1D25950CE5005C31E6 /* ProductDetailsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28CBEC1C25950CE5005C31E6 /* ProductDetailsTests.swift */; };
 		28DE3822258FDA71007E53C5 /* ErrorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28DE3820258FDA71007E53C5 /* ErrorViewController.xib */; };
 		28DE3823258FDA71007E53C5 /* ErrorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28DE3821258FDA71007E53C5 /* ErrorViewController.swift */; };
 		28DE382B258FDAB7007E53C5 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28DE382A258FDAB7007E53C5 /* UIColor.swift */; };
@@ -147,6 +148,7 @@
 		28CBEB682593F6A9005C31E6 /* XCTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTestCase.swift; sourceTree = "<group>"; };
 		28CBEB792593F79F005C31E6 /* ProductsListTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsListTests.swift; sourceTree = "<group>"; };
 		28CBEBA62593FDF6005C31E6 /* Stubs */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Stubs; sourceTree = "<group>"; };
+		28CBEC1C25950CE5005C31E6 /* ProductDetailsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsTests.swift; sourceTree = "<group>"; };
 		28DE3820258FDA71007E53C5 /* ErrorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ErrorViewController.xib; sourceTree = "<group>"; };
 		28DE3821258FDA71007E53C5 /* ErrorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorViewController.swift; sourceTree = "<group>"; };
 		28DE382A258FDAB7007E53C5 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
@@ -293,6 +295,7 @@
 			isa = PBXGroup;
 			children = (
 				28CBEB232593D775005C31E6 /* ProductsListTests */,
+				28CBEC1B25950CC7005C31E6 /* ProductDetailsTests */,
 				28CBEB222593D57B005C31E6 /* Mocks */,
 				28CBEBA62593FDF6005C31E6 /* Stubs */,
 				28CBEB682593F6A9005C31E6 /* XCTestCase.swift */,
@@ -473,6 +476,14 @@
 				28CBEB322593D8A9005C31E6 /* MockProductDetailsRepository.swift */,
 			);
 			path = MockRepository;
+			sourceTree = "<group>";
+		};
+		28CBEC1B25950CC7005C31E6 /* ProductDetailsTests */ = {
+			isa = PBXGroup;
+			children = (
+				28CBEC1C25950CE5005C31E6 /* ProductDetailsTests.swift */,
+			);
+			path = ProductDetailsTests;
 			sourceTree = "<group>";
 		};
 		28DE382F258FED02007E53C5 /* Views */ = {
@@ -834,6 +845,7 @@
 				28CBEB462593DA14005C31E6 /* MockResponseData.swift in Sources */,
 				28CBEB332593D8A9005C31E6 /* MockProductDetailsRepository.swift in Sources */,
 				28CBEB692593F6A9005C31E6 /* XCTestCase.swift in Sources */,
+				28CBEC1D25950CE5005C31E6 /* ProductDetailsTests.swift in Sources */,
 				28CBEB382593D8F2005C31E6 /* MockAPIResponse.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

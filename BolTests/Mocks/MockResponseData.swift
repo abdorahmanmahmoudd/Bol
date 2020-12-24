@@ -18,6 +18,10 @@ extension MockResponseData {
     func mockProductsList() -> ProductsList? {
         return (try? JSONDecoder().decode(ProductsList.self, from: getJSONFrom(resource: "Stubs/ProductsList-Success")))
     }
+    
+    func mockEmptyProductsList() -> ProductsList? {
+        return (try? JSONDecoder().decode(ProductsList.self, from: getJSONFrom(resource: "Stubs/ProductsList-Empty")))
+    }
 }
 
 // MARK: - ProductDetails Mocked data
@@ -25,5 +29,9 @@ extension MockResponseData {
 
     func mockProductDetails() -> ProductDetails? {
         return (try? JSONDecoder().decode(ProductDetails.self, from: getJSONFrom(resource: "Stubs/ProductDetails-Success")))
+    }
+    
+    func mockEmptyProductDetails() -> ProductDetails? {
+        return (try? JSONDecoder().decode(ProductDetails.self, from: getJSONFrom(resource: "Stubs/ProductDetails-Empty")))
     }
 }

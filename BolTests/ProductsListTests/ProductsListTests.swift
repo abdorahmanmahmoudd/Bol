@@ -7,7 +7,6 @@
 
 import XCTest
 import RxSwift
-import RxBlocking
 @testable import Bol
 
 class ProductsListTests: XCTestCase {
@@ -31,6 +30,134 @@ class ProductsListTests: XCTestCase {
             case .result:
                 /// Then
                 XCTAssert(!viewModel.isEmpty())
+            case .error:
+                /// Then
+                XCTAssert(false)
+            default:
+                break
+            }
+        }
+        
+        /// When
+        viewModel.fetchProductsList()
+    }
+    
+    func testProductsList_empty() {
+        
+        /// Given
+        let viewModel = productsListViewModel(responseType: .empty)
+        
+        /// Then
+        viewModel.refreshState = {
+            
+            switch viewModel.state {
+            case .result:
+                /// Then
+                XCTAssert(viewModel.isEmpty())
+            case .error:
+                /// Then
+                XCTAssert(false)
+            default:
+                break
+            }
+        }
+        
+        /// When
+        viewModel.fetchProductsList()
+    }
+    
+    func testProductsList_failure() {
+        
+        /// Given
+        let viewModel = productsListViewModel(responseType: .error)
+        
+        /// Then
+        viewModel.refreshState = {
+            
+            switch viewModel.state {
+            case .result:
+                /// Then
+                XCTAssert(false)
+            case .error:
+                /// Then
+                XCTAssert(true)
+            default:
+                break
+            }
+        }
+        
+        /// When
+        viewModel.fetchProductsList()
+    }
+  
+    func testProductsList_nextPage() {
+        
+        /// Given
+        let viewModel = productsListViewModel(responseType: .success)
+        
+        /// Then
+        viewModel.refreshState = {
+            
+            switch viewModel.state {
+            case .result:
+                /// Then
+                XCTAssert(!viewModel.isEmpty())
+            case .error:
+                /// Then
+                XCTAssert(false)
+            default:
+                break
+            }
+        }
+        
+        /// When
+        viewModel.fetchProductsList()
+        
+        /// Then
+        if viewModel.shouldGetNextPage(withCellIndex: 7) {
+            viewModel.getNextPage()
+        }
+    }
+    
+    func testProductsList_refreshProducts() {
+        
+        /// Given
+        let viewModel = productsListViewModel(responseType: .success)
+        
+        /// Then
+        viewModel.refreshState = {
+            
+            switch viewModel.state {
+            case .result:
+                /// Then
+                XCTAssert(!viewModel.isEmpty())
+            case .error:
+                /// Then
+                XCTAssert(false)
+            default:
+                break
+            }
+        }
+        
+        /// When
+        viewModel.fetchProductsList()
+        
+        /// When
+        viewModel.refreshProducts()
+    }
+    
+    func testProductsList_itemAt() {
+        
+        /// Given
+        let viewModel = productsListViewModel(responseType: .success)
+        
+        /// Then
+        viewModel.refreshState = {
+            
+            switch viewModel.state {
+            case .result:
+                /// Then
+                XCTAssertNotNil(viewModel.item(at: IndexPath(row: 0, section: 0)))
             case .error:
                 /// Then
                 XCTAssert(false)

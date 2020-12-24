@@ -22,6 +22,10 @@ final class MockProductsListRepository: API, ProductsListRepository {
         switch config {
         case .success:
             return MockAPIResponse(config: .success).productsListResponse()
+            
+        case .empty:
+            return MockAPIResponse(config: .empty).productsListResponse()
+            
         default:
             return MockAPIResponse(config: .error).productsListResponse()
         }
