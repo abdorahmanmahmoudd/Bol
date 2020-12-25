@@ -103,14 +103,7 @@ final class ProductsListViewController: BaseViewController {
                 
                 
             case .error(let error):
-                debugPrint("error \(String(describing: error))")
-                self.showLoadingIndicator(visible: false)
-                
-                /// If there is an error then show error view with that error and try again button
-                self.showError(with: "GENERAL_EMPTY_STATE_ERROR".localized, message: error?.localizedDescription, retry: {
-                    self.viewModel.fetchProductsList()
-                })
-                return
+                self.handleError(error)
                 
             case .result:
                 debugPrint("Result ProductsListViewController")
@@ -143,6 +136,11 @@ final class ProductsListViewController: BaseViewController {
                 
             }).disposed(by: disposeBag)
     }
+    
+    /// Retry block when error happens.
+    override func retry() {
+        self.viewModel.fetchProductsList()
+    }
 }
 
 // MARK: UICollectionViewDataSource
@@ -170,12 +168,12 @@ extension ProductsListViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         
-        /// Do not fetch next page during  specific UI tests
-//        #if DEBUG
-//        if UIApplication.isUITestingEnabled {
-//            return
-//        }
-//        #endif
+        /// Do not fetch next page during UI tests
+        #if DEBUG
+        if UIApplication.isUITestingEnabled {
+            return
+        }
+        #endif
         
         /// check if we should fetch the next page
         if viewModel.shouldGetNextPage(withCellIndex: indexPath.row) {
@@ -233,7 +231,7 @@ extension ProductsListViewController {
     override func setAccessibilityIdentifiers(){
         super.setAccessibilityIdentifiers()
         
-        productsCollectionView?.accessibilityIdentifier = AccessibilityIdentifiers.rijksListTableView.rawValue
+        productsCollectionView?.accessibilityIdentifier = AccessibilityIdentifiers.productsCollectionView.rawValue
         productsCollectionView?.isAccessibilityElement = false
     }
 }

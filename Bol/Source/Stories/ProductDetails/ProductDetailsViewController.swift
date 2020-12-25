@@ -22,7 +22,6 @@ final class ProductDetailsViewController: BaseViewController {
     @IBOutlet private weak var ratingView: CosmosView!
     @IBOutlet private weak var productAvailabilityView: ProductAvailabilityView!
     
-    
     /// `ProductDetailsViewModel`
     private var viewModel: ProductDetailsViewModel!
     
@@ -32,8 +31,8 @@ final class ProductDetailsViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        /// Setup Product images collectionView
-        setupProductImagesCollectionView()
+        /// Configure Product images collectionView
+        configureProductImagesCollectionView()
         
         /// Fetch Product Details API call
         viewModel.fetchProductDetails()
@@ -45,19 +44,24 @@ final class ProductDetailsViewController: BaseViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
-        /// If pop from parent view controller
+        /// If poping from parent view controller, notify the parent coordinator.
         if isMovingFromParent {
             (coordinator as? ProductDetailsCoordinator)?.didFinish()
         }
     }
     
-    private func setupProductImagesCollectionView() {
+    /// Product images collection view configuration
+    private func configureProductImagesCollectionView() {
         
         productImagesCollectionView.dataSource = self
         productImagesCollectionView.delegate = self
         
         let productImageNib = UINib(nibName: ProductImageCollectionViewCell.identifier, bundle: nil)
         productImagesCollectionView.register(productImageNib, forCellWithReuseIdentifier: ProductImageCollectionViewCell.identifier)
+    }
+    
+    private func configureImagesPageControl() {
+        imagesPageControlView.pages = viewModel.productMedia()
     }
     
     private func bindObservables() {
@@ -80,14 +84,7 @@ final class ProductDetailsViewController: BaseViewController {
                 
                 
             case .error(let error):
-                debugPrint("error \(String(describing: error))")
-                self.showLoadingIndicator(visible: false)
-                
-                /// If there is an error then show error view with that error and try again button
-                self.showError(with: "GENERAL_EMPTY_STATE_ERROR".localized, message: error?.localizedDescription, retry: {
-                    self.viewModel.fetchProductDetails()
-                })
-                return
+                self.handleError(error)
                 
             case .result:
                 debugPrint("Result ProductDetailsViewController")
@@ -102,29 +99,32 @@ final class ProductDetailsViewController: BaseViewController {
                     return
                 }
                 self.removeErrorView()
-                self.refreshViews()
+                self.configureViews()
             }
         }
     }
     
-    private func setupImagesPageControl() {
-        imagesPageControlView.pages = viewModel.productMedia()
+    /// Retry block when error happens.
+    override func retry() {
+        self.viewModel.fetchProductDetails()
     }
 
-    private func refreshViews() {
+    /// Reload views with data
+    private func configureViews() {
         
         /// Setup product images
-        setupImagesPageControl()
+        configureImagesPageControl()
         productImagesCollectionView.reloadData()
         
         /// Setup product name and seller
-        productNameLabel.text = viewModel.product?.title ?? "n/a"
-        productSellerLabel.text = viewModel.product?.offerData?.offers?.first?.seller?.displayName ?? "n/a"
+        productNameLabel.text = viewModel.product?.title
+        productSellerLabel.text = viewModel.product?.offerData?.offers?.first?.seller?.displayName
         
         /// Setup product price view
-        let price = viewModel.product?.offerData?.offers?.first?.price ?? 0.0
-        let listPrice = viewModel.product?.offerData?.offers?.first?.listPrice
-        productPriceView.configure(with: price, listPrice: listPrice)
+        if let price = viewModel.product?.offerData?.offers?.first?.price {
+            let listPrice = viewModel.product?.offerData?.offers?.first?.listPrice
+            productPriceView.configure(with: price, listPrice: listPrice)
+        }
         
         /// Setup product rating view
         ratingView.rating = Double(viewModel.product?.rating ?? 0) / 10
@@ -162,7 +162,7 @@ extension ProductDetailsViewController: UICollectionViewDelegate {
         debugPrint("Selected \(indexPath)")
     }
     
-    // Updating the PageControl current page
+    /// Updating the PageControl current page
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
 
         let pageWidth = Float(cellSize().width)
@@ -223,5 +223,21 @@ extension ProductDetailsViewController: Injectable {
 
     func assertInjection() {
         assert(viewModel != nil)
+    }
+}
+
+// MARK: Accessibility
+extension ProductDetailsViewController {
+
+    override func setAccessibilityIdentifiers(){
+        super.setAccessibilityIdentifiers()
+        
+        productImagesCollectionView.accessibilityIdentifier = AccessibilityIdentifiers.productDetailsImagesCollectionView.rawValue
+        imagesPageControlView.accessibilityIdentifier = AccessibilityIdentifiers.productDetailsImagesPageControl.rawValue
+        productNameLabel.accessibilityIdentifier = AccessibilityIdentifiers.productDetailsProductName.rawValue
+        productSellerLabel.accessibilityIdentifier = AccessibilityIdentifiers.productDetailsSeller.rawValue
+        productPriceView.accessibilityIdentifier = AccessibilityIdentifiers.productDetailsPriceView.rawValue
+        ratingView.accessibilityIdentifier = AccessibilityIdentifiers.productDetailsRatingView.rawValue
+        productAvailabilityView.accessibilityIdentifier = AccessibilityIdentifiers.productDetailsAvailibilityView.rawValue
     }
 }

@@ -7,15 +7,22 @@
 
 import Foundation
 
+// MARK: Accessibility identifiers used for UI testing setup.
 enum AccessibilityIdentifiers: String {
     
-    case rijksListTableView = "ProductsTableView",
-    loadingIndicator = "LoadingIndicator",
+    /// Common
+    case loadingIndicator = "LoadingIndicator",
     errorView = "ErrorView",
     
-    detailsArtTitle = "DetailsArtTitle",
-    detailsArtMaker = "DetailsArtMaker",
-    detailsArtDate = "DetailsArtDate",
-    detailsArtDescription = "DetailsArtDescription"
+    /// ProductsList
+    productsCollectionView = "ProductsCollectionView",
     
+    /// ProductDetails
+    productDetailsImagesCollectionView = "ProductDetailsImagesCollectionView",
+    productDetailsImagesPageControl = "ProductDetailsImagesPageControl",
+    productDetailsProductName = "ProductDetailsProductName",
+    productDetailsSeller = "ProductDetailsSeller",
+    productDetailsPriceView = "ProductDetailsPriceView",
+    productDetailsRatingView = "ProductDetailsRatingView",
+    productDetailsAvailibilityView = "ProductDetailsAvailibilityView"
 }

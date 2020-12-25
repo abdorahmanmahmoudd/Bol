@@ -18,9 +18,6 @@ class BaseViewController: UIViewController, UIGestureRecognizerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        /// Setup accessibility
-        setAccessibilityIdentifiers()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -29,7 +26,9 @@ class BaseViewController: UIViewController, UIGestureRecognizerDelegate {
         /// Enable swipe back gesture
         navigationController?.interactivePopGestureRecognizer?.delegate = self
         navigationController?.interactivePopGestureRecognizer?.isEnabled = true
-
+        
+        /// Setup accessibility
+        setAccessibilityIdentifiers()
     }
 
     /// Disable pop gesture in one situation:
@@ -45,6 +44,23 @@ class BaseViewController: UIViewController, UIGestureRecognizerDelegate {
     func showLoadingIndicator(visible: Bool) {
         PKHUD.sharedHUD.contentView = PKHUDSystemActivityIndicatorView()
         visible ? PKHUD.sharedHUD.show(onView: view) : PKHUD.sharedHUD.hide()
+    }
+    
+    /// Shared Error Handling functionality
+    func handleError(_ error: Error?) {
+        debugPrint("error \(String(describing: error))")
+        self.showLoadingIndicator(visible: false)
+        
+        /// If there is an error then show error view with that error and try again button
+        self.showError(with: "GENERAL_EMPTY_STATE_ERROR".localized, message: error?.localizedDescription, retry: {
+            self.retry()
+        })
+        return
+    }
+    
+    /// To be overrwitten by subclasses
+    func retry() {
+        debugPrint("Override by view controller subclass")
     }
 }
 

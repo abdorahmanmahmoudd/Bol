@@ -62,9 +62,7 @@ extension ProductsListViewModel {
             self.productsList.append(contentsOf: response?.products ?? [])
             self.totalItems = response?.totalResultSize ?? 0
             
-//            self.productsListObserver.on(.next(self.productsList))
-            
-            /// Call the result state backback
+            /// Call the result state callback
             self.resultState()
             
         }) { [weak self] error in
