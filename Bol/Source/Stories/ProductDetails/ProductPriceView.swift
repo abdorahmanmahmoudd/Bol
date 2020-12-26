@@ -17,16 +17,17 @@ final class ProductPriceView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        guard let xibView = loadNib() else {
-            return
-        }
-
-        addSubview(xibView)
-        xibView.activateConstraints(for: self)
+        configureNib()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+        
+        configureNib()
+    }
+    
+    /// Load and configure view Nib
+    private func configureNib() {
         
         guard let xibView = loadNib() else {
             return
@@ -49,7 +50,15 @@ final class ProductPriceView: UIView {
         priceLabel.text = "\(price)"
         
         if let listPrice = listPrice {
-            listPriceLabel.text = "adviesprijs \(listPrice)"
+            
+            let adviesprijsText = "ADVERTISED_PRICE_TEXT".localized
+            let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: "\(adviesprijsText) \(listPrice)")
+            
+            /// Cross out the old price text
+            let separatorRange = attributeString.mutableString.range(of: " ")
+            attributeString.addAttribute(.strikethroughStyle, value: 1, range: NSMakeRange(separatorRange.upperBound, "\(listPrice)".count))
+
+            listPriceLabel.attributedText = attributeString
         }
     }
 

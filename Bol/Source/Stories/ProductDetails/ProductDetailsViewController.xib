@@ -11,6 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ProductDetailsViewController" customModule="Bol" customModuleProvider="target">
             <connections>
+                <outlet property="accessoriesCarouselView" destination="grl-Lt-Cz2" id="ufl-xs-yLa"/>
                 <outlet property="imagesPageControlView" destination="7pW-DN-Ndh" id="t5Q-EC-hHk"/>
                 <outlet property="productAvailabilityView" destination="AVw-GE-xbE" id="6uY-HW-1BG"/>
                 <outlet property="productImagesCollectionView" destination="Zq0-dO-8Vv" id="Rls-o1-Npg"/>
@@ -30,7 +31,7 @@
                     <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jai-JV-Kmg" userLabel="ContainerView">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="531"/>
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="631"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Opt-iA-a31" userLabel="ImagesContainerView">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="350"/>
@@ -120,6 +121,10 @@
                                         <constraint firstAttribute="height" priority="750" constant="20" id="N8A-eg-IQS"/>
                                     </constraints>
                                 </view>
+                                <view contentMode="scaleToFill" placeholderIntrinsicWidth="infinite" placeholderIntrinsicHeight="100" translatesAutoresizingMaskIntoConstraints="NO" id="grl-Lt-Cz2" customClass="ProductsCarouselView" customModule="Bol" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="523" width="414" height="100"/>
+                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                </view>
                             </subviews>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <constraints>
@@ -128,16 +133,19 @@
                                 <constraint firstAttribute="trailing" secondItem="AVw-GE-xbE" secondAttribute="trailing" id="2lA-39-QaU"/>
                                 <constraint firstItem="AVw-GE-xbE" firstAttribute="leading" secondItem="jai-JV-Kmg" secondAttribute="leading" id="5z3-VH-h0t"/>
                                 <constraint firstAttribute="trailing" secondItem="Pf5-m0-98f" secondAttribute="trailing" id="8Ms-hX-qxk"/>
+                                <constraint firstAttribute="bottom" secondItem="grl-Lt-Cz2" secondAttribute="bottom" constant="8" id="BjT-vZ-0kN"/>
                                 <constraint firstItem="c9c-vr-xpr" firstAttribute="top" secondItem="Pf5-m0-98f" secondAttribute="bottom" id="DZt-PY-sJe"/>
+                                <constraint firstAttribute="trailing" secondItem="grl-Lt-Cz2" secondAttribute="trailing" id="F8H-kc-PZa"/>
                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="c9c-vr-xpr" secondAttribute="trailing" constant="16" id="J2q-lr-QSA"/>
                                 <constraint firstItem="dAy-pw-el5" firstAttribute="leading" secondItem="jai-JV-Kmg" secondAttribute="leading" constant="16" id="L8p-wU-uUK"/>
+                                <constraint firstItem="grl-Lt-Cz2" firstAttribute="top" secondItem="AVw-GE-xbE" secondAttribute="bottom" constant="8" id="W80-9q-A5N"/>
                                 <constraint firstItem="eRa-0u-Joq" firstAttribute="leading" secondItem="jai-JV-Kmg" secondAttribute="leading" constant="16" id="WeW-nK-9g0"/>
                                 <constraint firstItem="Pf5-m0-98f" firstAttribute="top" secondItem="Opt-iA-a31" secondAttribute="bottom" id="X0G-cu-X1g"/>
                                 <constraint firstItem="dAy-pw-el5" firstAttribute="top" secondItem="c9c-vr-xpr" secondAttribute="bottom" constant="16" id="b88-s5-flE"/>
                                 <constraint firstItem="c9c-vr-xpr" firstAttribute="leading" secondItem="jai-JV-Kmg" secondAttribute="leading" constant="16" id="bgK-jG-got"/>
-                                <constraint firstAttribute="bottom" secondItem="AVw-GE-xbE" secondAttribute="bottom" constant="16" id="fET-Wx-z14"/>
                                 <constraint firstItem="AVw-GE-xbE" firstAttribute="top" secondItem="eRa-0u-Joq" secondAttribute="bottom" constant="8" id="mOX-G5-IHM"/>
                                 <constraint firstItem="Pf5-m0-98f" firstAttribute="leading" secondItem="jai-JV-Kmg" secondAttribute="leading" id="njo-7J-d6F"/>
+                                <constraint firstItem="grl-Lt-Cz2" firstAttribute="leading" secondItem="jai-JV-Kmg" secondAttribute="leading" id="o0r-Dt-BNQ"/>
                                 <constraint firstItem="Opt-iA-a31" firstAttribute="leading" secondItem="jai-JV-Kmg" secondAttribute="leading" id="qo7-Ic-V8e"/>
                                 <constraint firstAttribute="trailing" secondItem="Opt-iA-a31" secondAttribute="trailing" id="suO-WT-MYT"/>
                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="eRa-0u-Joq" secondAttribute="trailing" constant="16" id="tL2-JL-hYN"/>

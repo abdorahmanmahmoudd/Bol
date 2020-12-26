@@ -33,13 +33,13 @@ protocol ShadowStyle {
 
 // Example of a predefined shadow style
 private struct CardShadow: ShadowStyle {
-  let color: UIColor = UIColor(red: 0.000, green: 0.000, blue: 0.000, alpha: 1)
-  let alpha: Float = 0.280
+  let color: UIColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
+  let alpha: Float = 0.28
   let inset: Bool = false
   let hOffset: CGFloat = 0
   let vOffset: CGFloat = 2
   let blur: CGFloat = 7
-  let spread: CGFloat = 0
+  let spread: CGFloat = 2
 }
 
 

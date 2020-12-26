@@ -67,11 +67,7 @@ extension ProductsListViewModel {
             
         }) { [weak self] error in
             
-            guard let self = self else {
-                return
-            }
-            
-            self.errorState(error)
+            self?.errorState(error)
 
         }.disposed(by: disposeBag)
     }
@@ -109,7 +105,7 @@ extension ProductsListViewModel {
     func shouldGetNextPage(withCellIndex index: Int) -> Bool{
         
         /// if reached the last cell && not reached the total number of items then reload next page
-        if index == productsList.count - 1 {
+        if index == productsList.count - 4 {
             if totalItems > productsList.count {
                 return true
             }

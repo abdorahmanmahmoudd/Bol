@@ -22,8 +22,10 @@ class ProductDetailsUITests: XCTestCase {
         XCTAssertTrue(collectionView.exists, "Products collectionView exists")
 
         // When
-        let staticTextIdentifier = "Digitale cadeaubon - 5 tot 150 euro"
-        collectionView.cells.containing(.staticText, identifier: staticTextIdentifier).staticTexts[staticTextIdentifier].tap()
+        let staticTextIdentifier = "Apple AirPods 2 - Niet draadloze oplaadcase"
+        let cell = collectionView.cells.containing(.staticText, identifier: staticTextIdentifier).staticTexts[staticTextIdentifier]
+        collectionView.scrollToElement(element: cell)
+        cell.tap()
                 
         // Then
         let imagesCollectionView = app.collectionViews[AccessibilityIdentifiers.productDetailsImagesCollectionView.rawValue]
@@ -33,7 +35,7 @@ class ProductDetailsUITests: XCTestCase {
         XCTAssertTrue(imagesPageControl.exists, "imagesPageControl exists")
         
         XCTAssertEqual(app.staticTexts[AccessibilityIdentifiers.productDetailsProductName.rawValue].label, staticTextIdentifier)
-        XCTAssertEqual(app.staticTexts[AccessibilityIdentifiers.productDetailsSeller.rawValue].label, "bol.com")
+        XCTAssertEqual(app.staticTexts[AccessibilityIdentifiers.productDetailsSeller.rawValue].label, "Apple")
         
         let productDetailsPriceView = app.otherElements[AccessibilityIdentifiers.productDetailsPriceView.rawValue]
         XCTAssertTrue(productDetailsPriceView.exists, "productDetailsPriceView exists")
@@ -41,7 +43,10 @@ class ProductDetailsUITests: XCTestCase {
         let productDetailsRatingView = app.otherElements[AccessibilityIdentifiers.productDetailsRatingView.rawValue]
         XCTAssertTrue(productDetailsRatingView.exists, "productDetailsRatingView exists")
         
-        let productDetailsAvailibilityView = app.otherElements[AccessibilityIdentifiers.productDetailsAvailibilityView.rawValue]
+                let productDetailsAvailibilityView = app.otherElements[AccessibilityIdentifiers.productDetailsAvailibilityView.rawValue]
         XCTAssertTrue(productDetailsAvailibilityView.exists, "productDetailsAvailibilityView exists")
+        
+        let accessoriesView = app.otherElements[AccessibilityIdentifiers.accessoriesCarouselView.rawValue]
+        XCTAssertTrue(accessoriesView.exists, "accessoriesView exists")
     }
 }

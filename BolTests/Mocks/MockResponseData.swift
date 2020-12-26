@@ -34,4 +34,12 @@ extension MockResponseData {
     func mockEmptyProductDetails() -> ProductDetails? {
         return (try? JSONDecoder().decode(ProductDetails.self, from: getJSONFrom(resource: "Stubs/ProductDetails-Empty")))
     }
+    
+    func mockRelatedProducts() -> RelatedProducts? {
+        return (try? JSONDecoder().decode(RelatedProducts.self, from: getJSONFrom(resource: "Stubs/RelatedProducts-Success")))
+    }
+    
+    func mockEmptyRelatedProducts() -> RelatedProducts? {
+        return (try? JSONDecoder().decode(RelatedProducts.self, from: getJSONFrom(resource: "Stubs/RelatedProducts-Empty")))
+    }
 }

@@ -12,6 +12,12 @@ final class ProductImageCollectionViewCell: UICollectionViewCell {
 
     @IBOutlet private weak var productImageView: UIImageView!
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+    
+        productImageView.image = nil
+    }
+    
     func configure(with imageURLString: String?) {
         
         if let urlString = imageURLString, let imageURL = URL(string: urlString) {

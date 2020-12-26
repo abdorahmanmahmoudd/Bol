@@ -1,5 +1,5 @@
 //
-//  ProductsListTests.swift
+//  ProductsViewModelListTests.swift
 //  BolTests
 //
 //  Created by Abdelrahman Ali on 23/12/2020.
@@ -9,7 +9,7 @@ import XCTest
 import RxSwift
 @testable import Bol
 
-class ProductsListTests: XCTestCase {
+class ProductsViewModelListTests: XCTestCase {
 
     /// Returns `ProductsListViewModel` injected with `MockRepositoryConfig`
     private func productsListViewModel(responseType: MockRepositoryConfig) -> ProductsListViewModel {

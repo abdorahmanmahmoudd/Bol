@@ -22,6 +22,8 @@ final class ProductDetailsViewController: BaseViewController {
     @IBOutlet private weak var ratingView: CosmosView!
     @IBOutlet private weak var productAvailabilityView: ProductAvailabilityView!
     
+    @IBOutlet private weak var accessoriesCarouselView: ProductsCarouselView!
+    
     /// `ProductDetailsViewModel`
     private var viewModel: ProductDetailsViewModel!
     
@@ -37,8 +39,14 @@ final class ProductDetailsViewController: BaseViewController {
         /// Fetch Product Details API call
         viewModel.fetchProductDetails()
         
+        /// Fetch Product accessories API call
+        viewModel.fetchProductAccessories()
+        
         /// Bind observables
         bindObservables()
+        
+        /// Configure navigationBar
+        styleNavigationBar()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -48,6 +56,11 @@ final class ProductDetailsViewController: BaseViewController {
         if isMovingFromParent {
             (coordinator as? ProductDetailsCoordinator)?.didFinish()
         }
+    }
+    
+    private func styleNavigationBar() {
+        navigationController?.hidesBarsOnSwipe = false
+        navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
     /// Product images collection view configuration
@@ -102,9 +115,17 @@ final class ProductDetailsViewController: BaseViewController {
                 self.configureViews()
             }
         }
+
+        /// Configure accessories view to listen for accessories behavior updates
+        viewModel.accessories.asDriver(onErrorJustReturn: [])
+            .drive(onNext: { [weak self] products in
+
+            self?.accessoriesCarouselView.configure(products)
+            
+        }).disposed(by: disposeBag)
     }
     
-    /// Retry block when error happens.
+    /// Retry block if counters an error.
     override func retry() {
         self.viewModel.fetchProductDetails()
     }
@@ -118,7 +139,7 @@ final class ProductDetailsViewController: BaseViewController {
         
         /// Setup product name and seller
         productNameLabel.text = viewModel.product?.title
-        productSellerLabel.text = viewModel.product?.offerData?.offers?.first?.seller?.displayName
+        productSellerLabel.text = viewModel.product?.specsTag
         
         /// Setup product price view
         if let price = viewModel.product?.offerData?.offers?.first?.price {
@@ -239,5 +260,6 @@ extension ProductDetailsViewController {
         productPriceView.accessibilityIdentifier = AccessibilityIdentifiers.productDetailsPriceView.rawValue
         ratingView.accessibilityIdentifier = AccessibilityIdentifiers.productDetailsRatingView.rawValue
         productAvailabilityView.accessibilityIdentifier = AccessibilityIdentifiers.productDetailsAvailibilityView.rawValue
+        accessoriesCarouselView.accessibilityIdentifier = AccessibilityIdentifiers.accessoriesCarouselView.rawValue
     }
 }

@@ -30,4 +30,17 @@ final class MockProductDetailsRepository: API, ProductDetailsRepository {
             return MockAPIResponse(config: .error).productDetailsResponse()
         }
     }
+    
+    func fetchRelatedProducts(productId: String, dataset: String) -> Single<RelatedProducts?> {
+        switch config {
+        case .success:
+            return MockAPIResponse(config: .success).relatedProductsResponse()
+            
+        case .empty:
+            return MockAPIResponse(config: .empty).relatedProductsResponse()
+            
+        default:
+            return MockAPIResponse(config: .error).relatedProductsResponse()
+        }
+    }
 }

@@ -74,4 +74,25 @@ extension MockAPIResponse {
             return Disposables.create()
         })
     }
+    
+    func relatedProductsResponse() -> Single<RelatedProducts?> {
+        
+        return Single<RelatedProducts?>.create(subscribe: { single -> Disposable in
+            
+            switch self.config {
+            case .success:
+                let relatedProducts = MockResponseData().mockRelatedProducts()
+                single(.success(relatedProducts))
+                
+            case .empty:
+                let emptyRelatedProducts = MockResponseData().mockEmptyRelatedProducts()
+                single(.success(emptyRelatedProducts))
+                
+            default:
+                single(.error(MockError.decodingError))
+            }
+            
+            return Disposables.create()
+        })
+    }
 }

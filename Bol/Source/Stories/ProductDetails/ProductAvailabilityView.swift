@@ -16,16 +16,17 @@ final class ProductAvailabilityView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        guard let xibView = loadNib() else {
-            return
-        }
-
-        addSubview(xibView)
-        xibView.activateConstraints(for: self)
+        configureNib()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+        
+        configureNib()
+    }
+    
+    /// Load and configure view Nib
+    private func configureNib() {
         
         guard let xibView = loadNib() else {
             return

@@ -20,3 +20,6 @@
 // MARK: Product Availability View
 "PRODUCT_AVAILABILITY_SELECT" = "Select";
 
+// MARK: Product Price View
+"ADVERTISED_PRICE_TEXT" = "adviesprijs";
+

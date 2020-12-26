@@ -24,5 +24,6 @@ enum AccessibilityIdentifiers: String {
     productDetailsSeller = "ProductDetailsSeller",
     productDetailsPriceView = "ProductDetailsPriceView",
     productDetailsRatingView = "ProductDetailsRatingView",
-    productDetailsAvailibilityView = "ProductDetailsAvailibilityView"
+    productDetailsAvailibilityView = "ProductDetailsAvailibilityView",
+    accessoriesCarouselView = "AccessoriesCarouselView"
 }

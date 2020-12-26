@@ -16,6 +16,10 @@ final class ProductDetailsViewModel: BaseStateController {
     /// Product
     private(set) var product: Product?
     
+    /// Product Accessories
+    private(set) var accessoryIds: [ProductId]?
+    private(set) var accessories: BehaviorSubject<[Product]> = .init(value: [])
+    
     /// Selected Product Id
     private var productId: String
     
@@ -33,7 +37,7 @@ extension ProductDetailsViewModel {
     
     func fetchProductDetails() {
         
-        _ = productDetailsAPI.fetchProductDetails(productId: self.productId).subscribe(onSuccess: { [weak self] response in
+        _ = productDetailsAPI.fetchProductDetails(productId: productId).subscribe(onSuccess: { [weak self] response in
             
             guard let self = self else {
                 return
@@ -51,6 +55,51 @@ extension ProductDetailsViewModel {
             self.errorState(error)
 
         }).disposed(by: disposeBag)
+    }
+    
+    func fetchProductAccessories(dataset: String = "accessories,productfamily") {
+        
+        _ = productDetailsAPI.fetchRelatedProducts(productId: productId, dataset: dataset).subscribe(onSuccess: { [weak self] response in
+            
+            guard let self = self else {
+                return
+            }
+            
+            self.accessoryIds = response?.accessories
+            self.fetchAccessoriesDetails()
+            
+        }, onError: { [weak self] error in
+            
+            self?.errorState(error)
+
+        }).disposed(by: disposeBag)
+    }
+    
+    private func fetchAccessoriesDetails() {
+        
+        guard let ids = accessoryIds else {
+            return
+        }
+        
+        let productDetailsRequests = ids.map({
+            return productDetailsAPI.fetchProductDetails(productId: $0.productId)
+        })
+        
+        Single.zip(productDetailsRequests)
+            .observeOn(MainScheduler.asyncInstance)
+            .do(onSuccess: { [weak self] productsDetails in
+                
+                guard let self = self else {
+                    return
+                }
+                
+                self.accessories.on(.next(productsDetails.compactMap({ $0?.product })))
+                
+            }, onError: { [weak self] error in
+                
+                self?.errorState(error)
+                
+            }).subscribe().disposed(by: disposeBag)
     }
 }
 
@@ -71,5 +120,4 @@ extension ProductDetailsViewModel {
         }
         return product?.media?[index].url ?? ""
     }
-    
 }
