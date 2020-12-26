@@ -14,7 +14,7 @@ final class ProductDetailsCoordinator: Coordinator {
     
     var api: NetworkRepository
     
-    weak var parentCoordinator: ProductsListCoordinator?
+    weak var parentCoordinator: Coordinator?
     
     /// Selected Product Id
     var productId: String
@@ -33,6 +33,14 @@ final class ProductDetailsCoordinator: Coordinator {
         productDetailsViewController.coordinator = self
         navigationController.pushViewController(productDetailsViewController, animated: true)
     }
+    
+    func didSelectProduct(with Id: String) {
+        
+        let productDetailsCoordinator = ProductDetailsCoordinator(navigationController, api, productId: Id)
+        productDetailsCoordinator.parentCoordinator = self
+        addChildCoordinator(productDetailsCoordinator)
+        productDetailsCoordinator.start()
+    }
 }
 
 // MARK: Additional behaviour
@@ -40,6 +48,6 @@ extension ProductDetailsCoordinator {
     
     /// After pop animation is done etc..
     func didFinish() {
-        parentCoordinator?.childDidFinish(self)
+        (parentCoordinator as? ProductsListCoordinator)?.childDidFinish(self)
     }
 }

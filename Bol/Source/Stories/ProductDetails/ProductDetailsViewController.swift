@@ -154,6 +154,9 @@ final class ProductDetailsViewController: BaseViewController {
         if let availability = viewModel.product?.offerData?.offers?.first?.availabilityDescription {
             productAvailabilityView.configure(with: availability)
         }
+        
+        /// Setup accessories carousel view delegate
+        accessoriesCarouselView.delegate = self
     }
 }
 
@@ -229,6 +232,16 @@ extension ProductDetailsViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0.0
+    }
+}
+
+// MARK: ProductsCarouselViewDelegate
+extension ProductDetailsViewController: ProductsCarouselViewDelegate {
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath, withProductId productId: String) {
+        
+        /// Open the `ProductDetailsViewController` with the selected ID
+        (coordinator as? ProductDetailsCoordinator)?.didSelectProduct(with: productId)
     }
 }
 

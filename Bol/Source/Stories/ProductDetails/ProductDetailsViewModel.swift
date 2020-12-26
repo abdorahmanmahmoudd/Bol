@@ -37,6 +37,8 @@ extension ProductDetailsViewModel {
     
     func fetchProductDetails() {
         
+        loadingState()
+        
         _ = productDetailsAPI.fetchProductDetails(productId: productId).subscribe(onSuccess: { [weak self] response in
             
             guard let self = self else {
@@ -86,7 +88,6 @@ extension ProductDetailsViewModel {
         })
         
         Single.zip(productDetailsRequests)
-            .observeOn(MainScheduler.asyncInstance)
             .do(onSuccess: { [weak self] productsDetails in
                 
                 guard let self = self else {

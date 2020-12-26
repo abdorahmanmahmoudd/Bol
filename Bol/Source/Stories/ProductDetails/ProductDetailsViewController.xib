@@ -31,7 +31,7 @@
                     <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jai-JV-Kmg" userLabel="ContainerView">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="631"/>
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="603.5"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Opt-iA-a31" userLabel="ImagesContainerView">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="350"/>
@@ -74,20 +74,20 @@
                                         <constraint firstAttribute="height" priority="750" constant="20" id="9HH-n3-5Tp"/>
                                     </constraints>
                                 </view>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Seller" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c9c-vr-xpr">
-                                    <rect key="frame" x="16" y="370" width="38" height="18"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tag" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c9c-vr-xpr">
+                                    <rect key="frame" x="16" y="370" width="24.5" height="18"/>
                                     <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Apple Airpods 2 - Niet draadloze oplaadcase" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dAy-pw-el5">
-                                    <rect key="frame" x="16" y="404" width="277" height="55"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Product title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dAy-pw-el5">
+                                    <rect key="frame" x="16" y="404" width="155" height="27.5"/>
                                     <fontDescription key="fontDescription" name="Georgia-Bold" family="Georgia" pointSize="24"/>
                                     <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eRa-0u-Joq" customClass="CosmosView" customModule="Cosmos">
-                                    <rect key="frame" x="16" y="467" width="84" height="20"/>
+                                    <rect key="frame" x="16" y="439.5" width="84" height="20"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <userDefinedRuntimeAttributes>
                                         <userDefinedRuntimeAttribute type="color" keyPath="filledColor">
@@ -115,14 +115,14 @@
                                     </userDefinedRuntimeAttributes>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AVw-GE-xbE" customClass="ProductAvailabilityView" customModule="Bol" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="495" width="414" height="20"/>
+                                    <rect key="frame" x="0.0" y="467.5" width="414" height="20"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstAttribute="height" priority="750" constant="20" id="N8A-eg-IQS"/>
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" placeholderIntrinsicWidth="infinite" placeholderIntrinsicHeight="100" translatesAutoresizingMaskIntoConstraints="NO" id="grl-Lt-Cz2" customClass="ProductsCarouselView" customModule="Bol" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="523" width="414" height="100"/>
+                                    <rect key="frame" x="0.0" y="495.5" width="414" height="100"/>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 </view>
                             </subviews>

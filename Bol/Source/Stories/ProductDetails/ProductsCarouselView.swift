@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol ProductsCarouselViewDelegate: class {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath, withProductId productId: String)
+}
+
 final class ProductsCarouselView: UIView {
 
     // UIOutlets
@@ -19,6 +23,8 @@ final class ProductsCarouselView: UIView {
     /// CollectionView insets
     private let sectionInsets = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
     private let cellHeight: CGFloat = 290
+    
+    weak var delegate: ProductsCarouselViewDelegate?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -92,6 +98,9 @@ extension ProductsCarouselView: UICollectionViewDataSource {
 // MARK: UICollectionViewDelegate
 extension ProductsCarouselView: UICollectionViewDelegate {
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        delegate?.collectionView(collectionView, didSelectItemAt: indexPath, withProductId: products[indexPath.item].id)
+    }
 }
 
 // MARK: UICollectionViewDelegateFlowLayout

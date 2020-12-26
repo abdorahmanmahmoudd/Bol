@@ -23,7 +23,7 @@ final class ProductCollectionViewCell: UICollectionViewCell {
         containerView.layer.shadow(shadow: .cardShadow)
         
         /// For Rendering optimization
-        /// Only use this when you are not doing any animations within the view componenets, otherwise it will have bad performance implications,
+        /// Only use this when you are not doing any animations within the view componenets, otherwise it will have bad performance implications.
         containerView.layer.shouldRasterize = true
         containerView.layer.rasterizationScale = UIScreen.main.scale
     }
